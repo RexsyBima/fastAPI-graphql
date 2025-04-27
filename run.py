@@ -1,5 +1,12 @@
-from app.schema import Query
 import strawberry
+from fastapi import FastAPI
+from strawberry.fastapi import GraphQLRouter
 
-schema = strawberry.Schema(query=Query)
+from app.schema import Query, Mutation
+
+schema = strawberry.Schema(query=Query, mutation=Mutation)
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix="/graphql")
 
